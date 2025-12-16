@@ -1,0 +1,78 @@
+<div class="container">
+  <div class="title">
+    <h1 class="text-gradient">
+      Register
+    </h1>
+  </div>
+  <div class="body">
+    <form class="form-group" [formGroup]="registerForm" (ngSubmit)="onSubmit(registerForm.value)">
+      <div class="form-group mt-3">
+        <label for="fullName" class="form-label">
+          FullName
+        </label>
+        <input
+          type="text"
+          id="fullName"
+          placeholder="Enter your full name"
+          formControlName="fullName"
+          class="form-control"
+        />
+        @if (registerForm.get('fullName')?.invalid && registerForm.get('fullName')?.touched) {
+          <div class="text-danger">
+            Please enter a valid name
+          </div>
+        }
+      </div>
+      <div class="form-group mt-3">
+        <label for="email" class="form-label"> Email</label>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="Enter your email"
+          id="email"
+          class="form-control"
+        >
+        @if (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) {
+          <div class="text-danger">
+            Please enter a valid email
+          </div>
+        }
+      </div>
+      <div class="form-group mt-3">
+        <label for="password" class="form-label" Password>Password</label>
+        <input
+          id="password"
+          formControlName="password"
+          type="password"
+          placeholder="Enter your password"
+          class="form-control"
+        >
+        @if(registerForm.get('password')?.invalid && registerForm.get('password')?.touched){
+          <div class="text-danger">
+            Please enter a valid password
+          </div>
+        }
+      </div>
+      <div class="form-group mt-3">
+        <label for="confirmPassword" class="form-label" Password>Confirm Password</label>
+        <input
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          type="password"
+          placeholder="Enter your password"
+          class="form-control"
+        >
+        @if ((registerForm.get('confirmPassword')?.invalid && registerForm.get('confirmPassword')?.touched) || registerForm.errors?.['passwordMismatch']) {
+          <div class="text-danger">
+            Passwords do not match
+          </div>
+        }
+      </div>
+      <div class="button-group col-12">
+        <button type="submit" class="btn btn-primary col-6">Register</button>
+        <a [routerLink]="['/login']" type="button" class="btn btn-danger col-6">Cancel</a>
+      </div>
+    </form>
+
+  </div>
+</div>
