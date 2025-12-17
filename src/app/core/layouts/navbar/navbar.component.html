@@ -24,24 +24,7 @@
             Home
           </a>
         </li>
-        <li class="nav-item">
-          <a
-            class="nav-link"
-            routerLinkActive="active"
-            [routerLink]="['/My-Loans']"
-          >
-            My Loans
-          </a>
-        </li>
-        <!--        <li class="nav-item">-->
-        <!--          <a-->
-        <!--            class="nav-link"-->
-        <!--            routerLinkActive="active"-->
-        <!--            [routerLink]="['/']"-->
-        <!--          >-->
-        <!--            Books-->
-        <!--          </a>-->
-        <!--        </li> -->
+
         <li class="nav-item">
           <a
             class="nav-link"
@@ -53,42 +36,44 @@
         </li>
       </ul>
 
-      <div class="d-flex align-items-center">
-<!--        @if(this.loginService.currentUser()){-->
-          <div class="dropdown">
+      <ul class="navbar-nav ms-auto">
+        @if (!authService.token()) {
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/login']">Login</a>
+          </li>
+          <li class="nav-item">
             <a
-              class="nav-link dropdown-toggle text-light"
+              class="nav-link"
+              [routerLink]="['/register']"
+            >
+              Register
+            </a>
+          </li>
+        } @else {
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
               href="#"
               role="button"
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-<!--              Welcome {{ this.loginService.currentEmail() }}-->
+              Account
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
                 <a
                   class="dropdown-item"
                   (click)="logOut()"
-                  style="cursor: pointer"
+                  style="cursor: pointer;"
                 >
                   Logout
                 </a>
               </li>
             </ul>
-          </div>
-<!--        } @else{-->
-          <div class="d-flex gap-2">
-            <a class="btn btn-outline-light" [routerLink]="['/login']">Login</a>
-            <a
-              class="btn btn-light text-primary fw-bold"
-              [routerLink]="['/register']"
-            >
-              Register
-            </a>
-          </div>
-<!--        }-->
-      </div>
+          </li>
+        }
+      </ul>
     </div>
   </div>
 </nav>

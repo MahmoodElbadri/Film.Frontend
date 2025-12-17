@@ -3,9 +3,12 @@
     <h1>Movie List</h1>
     <a [routerLink]="['/movies/add']" class="btn btn-primary">Add Movie</a>
   </div>
-  @if (movieList && movieList.length > 0) {
+  <div class="mt-3 col-12">
+    <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTerm" (ngModelChange)="loadPage($event)">
+  </div>
+  @if (movies && movies.length > 0) {
     <div class="row mt-4">
-      @for (movie of movieList; track $index) {
+      @for (movie of movies; track $index) {
 
         <div class="col-md-4 mb-3">
           <div class="card h-100">
@@ -38,5 +41,23 @@
         <h5 class="card-title text-center">No Movies Found</h5>
       </div>
     </div>
+  }
+  @if(pages.length > 1){
+    <nav class="d-flex justify-content-center">
+      <ul class="pagination pagination-lg">
+        <li class="page-item" [class.disabled]="pageNumber === 1">
+          <a class="page-link" (click)="goTo(pageNumber-1)">‹</a>
+        </li>
+
+        <li class="page-item" *ngFor="let p of pages"
+            [class.active]="p === pageNumber">
+          <a class="page-link" (click)="goTo(p)">{{ p }}</a>
+        </li>
+
+        <li class="page-item" [class.disabled]="pageNumber === pages.length">
+          <a class="page-link" (click)="goTo(pageNumber+1)">›</a>
+        </li>
+      </ul>
+    </nav>
   }
 </div>

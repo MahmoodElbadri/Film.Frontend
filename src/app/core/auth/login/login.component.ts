@@ -25,19 +25,19 @@ export class LoginComponent implements OnInit {
 
   //variables
 
+  ngOnInit(): void {
+    this.initializeLoginForm();
+  }
 
-  initializeLoginForm(){
+  initializeLoginForm() {
     this.loginForm = this.fb.group({
       email: ['', [Validators.email, Validators.required]],
       password: ['', [Validators.required, Validators.minLength(1)]]
     })
   }
 
-  ngOnInit(): void {
-    this.initializeLoginForm();
-  }
 
-  login(model: any){
+  login(model: any) {
     console.log(this.loginForm.value);
     this.authService.login(model).subscribe({
       next: (response) => {

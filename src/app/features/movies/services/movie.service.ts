@@ -14,14 +14,15 @@ export class MovieService {
   baseUrl = environment.apiUrl;
 
   getAll() {
-    return this.http.get<MovieDto[]>(`${this.baseUrl}movies`);
+    return this.http.get<MovieDto[]>(`${this.baseUrl}movies/all`);
   }
 
-  getPaged(pageNumber: number, pageSize: number) {
+  getPaged(pageNumber: number, pageSize: number, searchTerm: string) {
     return this.http.get<PagedResult<MovieDto>>(`${this.baseUrl}movies`, {
       params: {
         pageNumber,
-        pageSize
+        pageSize,
+        searchTerm
       }
     });
   }

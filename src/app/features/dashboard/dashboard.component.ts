@@ -2,7 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {MovieService} from '../movies/services/movie.service';
 import {MovieDto} from '../movies/models/movie-dto';
 import {ToastrService} from "ngx-toastr";
-import {DatePipe, JsonPipe} from '@angular/common';
+import {DatePipe} from '@angular/common';
 import {PieChartModule} from '@swimlane/ngx-charts';
 import {RouterLink} from '@angular/router';
 
@@ -10,7 +10,6 @@ import {RouterLink} from '@angular/router';
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-    JsonPipe,
     PieChartModule,
     DatePipe,
     RouterLink
