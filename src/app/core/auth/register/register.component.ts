@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {AuthService} from '../../_services/auth.service';
+import {AuthService} from '../_services/auth.service';
 import {Router, RouterLink} from '@angular/router';
 import {Register} from '../../../features/auth/models/register';
 import {PasswordMatchValidator} from '../validators/password-match.validator';

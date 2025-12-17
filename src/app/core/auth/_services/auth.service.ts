@@ -1,9 +1,9 @@
 import {inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs';
-import { environment } from '../../../environments/environment.development';
-import {Login} from '../../features/auth/models/login';
-import {Register} from '../../features/auth/models/register';
+import { environment } from '../../../../environments/environment.development';
+import {Login} from '../../../features/auth/models/login';
+import {Register} from '../../../features/auth/models/register';
 
 @Injectable({
   providedIn: 'root'

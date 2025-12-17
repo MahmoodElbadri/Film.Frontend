@@ -1,1 +1,49 @@
-<p>movie-details works!</p>
+<div class="container mt-4">
+  <header class="mb-3">
+    <h1>Movie Details</h1>
+  </header>
+
+  @if (movie) {
+    <div class="row g-0">
+      <!-- image half -->
+      <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+        <img [src]="movie.posterUrl"
+             class="img-fluid rounded shadow w-75"
+             [alt]="movie.title">
+      </div>
+
+      <div class="col-12 col-md-6 px-4 d-flex flex-column justify-content-center">
+        <h2 class="mb-2">{{ movie.title }}</h2>
+        <p class="mb-1"><strong>Story:</strong> {{ movie.description }}</p>
+        <p class="mb-1"><strong>Release Date:</strong> {{ movie.releaseDate | date:'mediumDate' }}</p>
+        <p class="mb-0"><strong>Genre:</strong> {{ movie.genre }}</p>
+      </div>
+    </div>
+
+    <div class="row mt-4 g-2">
+      <div class="col-12 col-md-4">
+        <a [routerLink]="['/']" class="btn btn-outline-secondary w-100">Back to List</a>
+      </div>
+      <div class="col-12 col-md-4">
+        <a [routerLink]="['/movies/update', movie.id]" class="btn btn-outline-primary w-100">Update</a>
+      </div>
+      <div class="col-12 col-md-4">
+        <button (click)="deleteSwal.fire()" class="btn btn-outline-danger w-100">
+          <swal
+            #deleteSwal
+            title="Delete {{ movie.title }}?"
+            text="This cannot be undone"
+            icon="question"
+            [showCancelButton]="true"
+            [focusCancel]="true"
+            (confirm)="deleteMovie(movie.id)"
+          >
+          </swal>
+          Delete
+        </button>
+      </div>
+    </div>
+  } @else {
+    <div class="alert alert-danger" role="alert">Movie not found</div>
+  }
+</div>

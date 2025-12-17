@@ -1,0 +1,43 @@
+/* Card Image Fixed Height */
+.card-img-fixed {
+  height: 250px; /* Fixed height for all images */
+  overflow: hidden;
+  position: relative;
+  background-color: var(--gray-100);
+}
+
+.card-img-fixed .card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This maintains aspect ratio while filling container */
+  object-position: center; /* Centers the image */
+  transition: transform 0.3s ease;
+}
+
+/* Optional: Add hover effect */
+.card:hover .card-img-fixed .card-img {
+  transform: scale(1.05);
+}
+
+/* Ensure cards stretch to same height in row */
+.h-100 {
+  height: 100%;
+}
+
+/* Make card body flex column */
+.d-flex.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
+.pt-3 {
+  padding-top: 1rem;
+}
+
+.ms-2 {
+  margin-left: 0.5rem;
+}

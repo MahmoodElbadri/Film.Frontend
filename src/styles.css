@@ -1299,3 +1299,216 @@ router-outlet + * {
   body { background: white !important; }
   .text-gradient { -webkit-text-fill-color: var(--primary-600) !important; }
 }
+
+@import 'sweetalert2/src/sweetalert2.scss';
+
+/* ========== CARD IMAGE FIXES ========== */
+
+/* Card Image Container - Force equal height */
+.card-img-container {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio (adjust as needed) */
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--gray-100), var(--gray-200));
+}
+
+/* Alternative: Fixed Height Container */
+.card-img-fixed {
+  height: 200px; /* Fixed height for all cards */
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--gray-100), var(--gray-200));
+  position: relative;
+}
+
+/* Card Image - Object Fit Method (Best for maintaining aspect ratio) */
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This is the key property */
+  transition: transform var(--transition);
+}
+
+.card-img-contain {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Shows entire image with letterboxing */
+  background: var(--surface);
+  padding: var(--space-2);
+}
+
+.card-img-fill {
+  width: 100%;
+  height: 100%;
+  object-fit: fill; /* Stretches image to fill container */
+}
+
+/* Aspect Ratio Classes */
+.aspect-ratio-1-1 { padding-top: 100%; } /* Square */
+.aspect-ratio-4-3 { padding-top: 75%; } /* 4:3 */
+.aspect-ratio-16-9 { padding-top: 56.25%; } /* 16:9 */
+.aspect-ratio-21-9 { padding-top: 42.85%; } /* 21:9 */
+
+/* Hover Effects for Card Images */
+.card-hover .card-img-container {
+  overflow: hidden;
+}
+
+.card-hover .card-img {
+  transition: transform var(--transition-slow);
+}
+
+.card-hover:hover .card-img {
+  transform: scale(1.05);
+}
+
+/* Overlay Effects */
+.card-img-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  padding: var(--space-4);
+  color: white;
+  transform: translateY(100%);
+  transition: transform var(--transition);
+}
+
+.card-img-container:hover .card-img-overlay {
+  transform: translateY(0);
+}
+
+/* Lazy Loading Placeholder */
+.card-img-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, var(--gray-200) 25%, var(--gray-300) 50%, var(--gray-200) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Grid Layout for Equal Height Cards */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-5);
+  align-items: stretch; /* Makes all cards same height */
+}
+
+.cards-grid .card {
+  height: 100%; /* Fill grid cell */
+  display: flex;
+  flex-direction: column;
+}
+
+.cards-grid .card-body {
+  flex: 1; /* Push footer to bottom */
+}
+
+/* Masonry Layout Alternative */
+.cards-masonry {
+  columns: 3 280px;
+  column-gap: var(--space-5);
+}
+
+.cards-masonry .card {
+  break-inside: avoid;
+  margin-bottom: var(--space-5);
+}
+
+/* Responsive Image Heights */
+@media (min-width: 768px) {
+  .card-img-fixed-md {
+    height: 250px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .card-img-fixed-lg {
+    height: 300px;
+  }
+}
+
+/* Image Fallback for Broken Images */
+.card-img-fallback {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--gray-400);
+  font-size: var(--font-size-3xl);
+  opacity: 0.5;
+}
+
+.card-img-container img:not([src]),
+.card-img-container img[src=""] {
+  opacity: 0;
+}
+
+.card-img-container img:not([src]) + .card-img-fallback,
+.card-img-container img[src=""] + .card-img-fallback {
+  display: block;
+}
+
+/* Card Types with Different Image Treatments */
+
+/* Product Card */
+.card-product .card-img-container {
+  padding-top: 100%; /* Square images for products */
+  background: white;
+}
+
+.card-product .card-img {
+  padding: var(--space-4);
+  object-fit: contain;
+}
+
+/* Blog Card */
+.card-blog .card-img-container {
+  padding-top: 56.25%; /* Wide images for blogs */
+}
+
+/* Profile Card */
+.card-profile .card-img-container {
+  width: 120px;
+  height: 120px;
+  border-radius: var(--radius-full);
+  margin: -60px auto var(--space-4);
+  border: 4px solid var(--surface);
+  box-shadow: var(--shadow-lg);
+}
+
+.card-profile .card-img {
+  border-radius: var(--radius-full);
+}
+
+/* Featured Card (Highlighted) */
+.card-featured {
+  grid-column: span 2; /* In grid layout */
+}
+
+.card-featured .card-img-container {
+  padding-top: 45%; /* Shorter ratio for featured */
+}
+
+/* Card with Icon Instead of Image */
+.card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  font-size: var(--font-size-4xl);
+  color: var(--primary-500);
+  background: var(--primary-50);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-4);
+}
