@@ -4,6 +4,7 @@ import {environment} from '../../../../environments/environment.development';
 import {UpSertMovie} from '../models/create-movie';
 import {MovieDto} from '../models/movie-dto';
 import {PagedResult} from '../models/pagedResult';
+import {delay} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class MovieService {
   }
 
   getMovieById(id: number) {
-    return this.http.get<MovieDto>(`${this.baseUrl}movies/${id}`);
+    return this.http.get<MovieDto>(`${this.baseUrl}movies/${id}`).pipe(delay(1000));
   }
 
   updateMovie(id: number, model: UpSertMovie) {
