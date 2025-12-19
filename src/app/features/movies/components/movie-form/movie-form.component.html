@@ -92,8 +92,19 @@
         </div>
       }
       </div>
+      @if(addMovieForm.get('posterUrl')?.value){
+      <div class="mt-3">
+        <label for="imagePreview" class="form-label">Image Preview</label>
+        <img id="imagePreview"
+             [src]="addMovieForm.get('posterUrl')?.value"
+             alt="imagePreview"
+             class="form-control"
+             width="25"
+             height="500">
+      </div>
+      }
 
-      <div class="button-group col-12">
+      <div class="button-group col-12 mt-3">
         <button
           type="submit"
           class="btn btn-primary col-6"

@@ -24,13 +24,13 @@ export class MovieListComponent implements OnInit {
   private movieService = inject(MovieService);
   private toastr = inject(ToastrService);
   //variables
-  movies!: MovieDto[];
-  total = 0;
-  pageNumber = 1;
-  pageSize = 6;                 // items per page
-  pages: number[] = [];
-  searchTerm = '';
-  searchTimeOut: any;
+  protected movies!: MovieDto[];
+  protected total = 0;
+  protected pageNumber = 1;
+  protected pageSize = 6;                 // items per page
+  protected pages: number[] = [];
+  protected searchTerm = '';
+  protected searchTimeOut: any;
 
 
   ngOnInit(): void {
