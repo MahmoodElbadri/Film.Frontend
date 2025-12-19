@@ -18,9 +18,9 @@ import {PasswordMatchValidator} from '../validators/password-match.validator';
 export class RegisterComponent implements OnInit {
 
   //injections
-  fb = inject(FormBuilder);
-  authService = inject(AuthService);
-  router = inject(Router);
+  protected fb = inject(FormBuilder);
+  protected authService = inject(AuthService);
+  private router = inject(Router);
 
   //variables
   registerForm!: FormGroup;
