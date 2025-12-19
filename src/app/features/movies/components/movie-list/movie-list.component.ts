@@ -21,8 +21,8 @@ import {FormsModule} from '@angular/forms';
 export class MovieListComponent implements OnInit {
 
   //injections
-  movieService = inject(MovieService);
-  toastr = inject(ToastrService);
+  private movieService = inject(MovieService);
+  private toastr = inject(ToastrService);
   //variables
   movies!: MovieDto[];
   total = 0;
