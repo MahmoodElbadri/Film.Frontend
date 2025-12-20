@@ -65,6 +65,8 @@ export class MovieListComponent implements OnInit {
   }
 
 
+
+
   deleteMovie(arg0: number) {
     this.movieService.deleteMovie(+arg0).subscribe({
       next: (res) => {

@@ -45,4 +45,9 @@ export class MovieService {
     return this.http.delete(`${this.baseUrl}movies/${id}`);
   }
 
+  //https://localhost:7294/api/Reviews/movie/1014/average
+  getAvgRating(movieId: number){
+    return this.http.get<number>(`${this.baseUrl}Reviews/movie/${movieId}/average`);
+  }
+
 }

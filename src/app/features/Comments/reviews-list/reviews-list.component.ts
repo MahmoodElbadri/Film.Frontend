@@ -21,7 +21,7 @@ export class ReviewsListComponent implements OnInit {
   private toastr = inject(ToastrService);
 
   // Variables
-  protected id = input.required<number>();
+  public id = input.required<number>();
   protected currentId:number = 0;
   protected reviewDtos: ReviewDto[] = [];
 

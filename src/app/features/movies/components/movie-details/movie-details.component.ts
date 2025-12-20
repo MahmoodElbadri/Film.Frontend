@@ -31,6 +31,7 @@ export class MovieDetailsComponent implements OnInit {
   fb = inject(FormBuilder);
   toastr = inject(ToastrService);
 
+
   // ViewChild references
   @ViewChild('deleteSwal') deleteSwal!: SwalComponent;
   @ViewChild(ReviewsListComponent) reviewsList!: ReviewsListComponent;
@@ -40,6 +41,7 @@ export class MovieDetailsComponent implements OnInit {
   protected commentForm!: FormGroup;
   protected id: number = 0;
   // comments: Comment[] = [];
+  protected avgRating!: number;
   protected ratingValue: number = 0; // For star rating display
   private reviewService = inject(ReviewService);
 
@@ -51,6 +53,7 @@ export class MovieDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.getMovieById(this.id);
     this.initializeCommentForm();
+    this.getAvgRating(this.id);
   }
 
   initializeCommentForm() {
@@ -62,6 +65,17 @@ export class MovieDetailsComponent implements OnInit {
     // Watch for rating changes to update display
     this.commentForm.get('rating')?.valueChanges.subscribe(value => {
       this.ratingValue = value;
+    });
+  }
+
+  getAvgRating(movieId: number){
+    this.movieService.getAvgRating(movieId).subscribe({
+      next:(res)=>{
+        this.avgRating = res;
+      },
+      error:(err)=>{
+        this.toastr.error('Failed to get movie average rating')
+      }
     });
   }
 
