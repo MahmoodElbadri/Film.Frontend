@@ -92,7 +92,7 @@
         </div>
       }
       </div>
-      @if(addMovieForm.get('posterUrl')?.value){
+      @if(addMovieForm.get('posterUrl')?.value && addMovieForm.get('posterUrl')?.valid){
       <div class="mt-3">
         <label for="imagePreview" class="form-label">Image Preview</label>
         <img id="imagePreview"

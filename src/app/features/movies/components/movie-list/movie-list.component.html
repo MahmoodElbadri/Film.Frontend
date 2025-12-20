@@ -29,7 +29,21 @@
                 <p class="card-text"><small class="text-muted">Genre: {{movie.genre}}</small></p>
               </div>
               <a class="btn btn-outline-success" [routerLink]="['/movies/update/', movie.id]">Update</a>
-              <a class="btn btn-outline-danger ms-2" (click)="deleteMovie(movie.id)">Delete</a>
+              <div class="col-12">
+                <button (click)="deleteSwal.fire()" class="btn btn-outline-danger w-100">
+                  <swal
+                    #deleteSwal
+                    title="Delete {{ movie.title }}?"
+                    text="This cannot be undone"
+                    icon="question"
+                    [showCancelButton]="true"
+                    [focusCancel]="true"
+                    (confirm)="deleteMovie(movie.id)"
+                  >
+                  </swal>
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         </div>

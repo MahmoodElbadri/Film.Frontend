@@ -5,6 +5,7 @@ import {DatePipe, NgForOf} from '@angular/common';
 import {RouterLink} from "@angular/router";
 import {ToastrService} from 'ngx-toastr';
 import {FormsModule} from '@angular/forms';
+import {SwalComponent} from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'app-movie-list',
@@ -13,7 +14,8 @@ import {FormsModule} from '@angular/forms';
     DatePipe,
     RouterLink,
     NgForOf,
-    FormsModule
+    FormsModule,
+    SwalComponent
   ],
   templateUrl: './movie-list.component.html',
   styleUrl: './movie-list.component.css'
