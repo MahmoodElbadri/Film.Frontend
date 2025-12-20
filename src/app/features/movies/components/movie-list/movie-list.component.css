@@ -41,3 +41,43 @@
 .ms-2 {
   margin-left: 0.5rem;
 }
+
+
+/* Fixed Position */
+.back-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  z-index: 1000; /* Ensure it is on top of everything */
+
+  /* Initial State (Hidden) */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease-in-out;
+
+  /* Styling */
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: white;
+  font-size: 24px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Active State (Visible) */
+.back-to-top.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Hover Effect */
+.back-to-top:hover {
+  transform: translateY(-5px); /* Move up slightly */
+  box-shadow: 0 10px 20px rgba(118, 75, 162, 0.4);
+}

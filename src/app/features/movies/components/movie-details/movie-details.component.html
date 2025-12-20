@@ -1,54 +1,59 @@
-<div class="container py-4">
-  <!-- Back Navigation -->
+<div class="container py-5">
   <div class="mb-4">
-    <a [routerLink]="['/']" class="btn btn-outline-primary hover-lift">
-      <span class="text-gradient">← Back to List</span>
+    <a [routerLink]="['/']" class="btn btn-outline-primary rounded-pill px-4 hover-lift d-inline-flex align-items-center gap-2">
+      <span>←</span> <span class="fw-bold">Back to List</span>
     </a>
   </div>
 
   @if (movie) {
-    <!-- Movie Details Card -->
-    <div class="card card-glass shadow-lg mb-4">
-      <div class="row g-0 align-items-stretch">
-        <!-- Poster Column -->
-        <div class="col-md-6">
-          <img [src]="movie.posterUrl"
-               class="img-fluid w-100 h-100 object-fit-cover rounded-start"
-               [alt]="movie.title"
-               onerror="this.src='https://via.placeholder.com/800x450?text=No+Poster'">
+    <div class="card card-glass border-0 shadow-lg mb-5 overflow-hidden">
+      <div class="row g-0">
+        <div class="col-md-5 col-lg-4 bg-dark">
+          <div class="h-100 position-relative">
+            <img [src]="movie.posterUrl"
+                 class="img-fluid w-100 h-100 object-fit-cover opacity-hover"
+                 [alt]="movie.title"
+                 style="min-height: 500px;"
+                 onerror="this.src='https://via.placeholder.com/800x600?text=No+Poster'">
+            <div class="position-absolute bottom-0 start-0 w-100 p-3 bg-gradient-dark text-white d-md-none">
+              <h2 class="m-0">{{ movie.title }}</h2>
+            </div>
+          </div>
         </div>
 
-        <!-- Details Column -->
-        <div class="col-md-6">
-          <div class="card-body h-100 d-flex flex-column">
-            <h1 class="text-gradient mb-3">{{ movie.title }}</h1>
+        <div class="col-md-7 col-lg-8">
+          <div class="card-body p-4 p-lg-5 d-flex flex-column h-100">
+            <div class="mb-auto">
+              <h1 class="text-gradient display-5 fw-bold mb-3 d-none d-md-block">{{ movie.title }}</h1>
 
-            <div class="mb-4">
-              <h4 class="text-secondary mb-2">Story</h4>
-              <p class="line-clamp-4">{{ movie.description }}</p>
-            </div>
-
-            <div class="mb-4">
-              <div class="d-flex align-items-center gap-3 mb-2">
-                <span class="badge bg-primary rounded-pill">{{ movie.genre }}</span>
-                <span class="text-muted">
-                  <i>📅</i> {{ movie.releaseDate | date:'mediumDate' }}
+              <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
+                <span class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-3 py-2 fs-6 border border-primary">
+                  🎬 {{ movie.genre }}
+                </span>
+                <span class="text-muted d-flex align-items-center gap-1">
+                  📅 {{ movie.releaseDate | date:'longDate' }}
                 </span>
               </div>
+
+              <div class="mb-4">
+                <h5 class="text-secondary fw-bold mb-3 border-bottom pb-2 d-inline-block">Storyline</h5>
+                <p class="lead fs-6 text-muted lh-lg">
+                  {{ movie.description }}
+                </p>
+              </div>
             </div>
 
-            <!-- Stats -->
-            <div class="row g-2 mb-4">
-              <div class="col-6">
-                <div class="p-3 bg-light rounded">
-                  <h6 class="text-muted mb-1">Genre</h6>
-                  <p class="mb-0">{{ movie.genre }}</p>
+            <div class="row g-3 mt-4">
+              <div class="col-sm-6">
+                <div class="p-3 bg-light rounded-3 border-start border-4 border-primary shadow-sm h-100">
+                  <small class="text-uppercase text-muted fw-bold ls-1">Genre</small>
+                  <p class="mb-0 fs-5 fw-bold text-dark">{{ movie.genre }}</p>
                 </div>
               </div>
-              <div class="col-6">
-                <div class="p-3 bg-light rounded">
-                  <h6 class="text-muted mb-1">Release Date</h6>
-                  <p class="mb-0">{{ movie.releaseDate | date:'fullDate' }}</p>
+              <div class="col-sm-6">
+                <div class="p-3 bg-light rounded-3 border-start border-4 border-success shadow-sm h-100">
+                  <small class="text-uppercase text-muted fw-bold ls-1">Released</small>
+                  <p class="mb-0 fs-5 fw-bold text-dark">{{ movie.releaseDate | date:'mediumDate' }}</p>
                 </div>
               </div>
             </div>
@@ -57,111 +62,103 @@
       </div>
     </div>
 
-    <!-- Comments Section -->
-    <div class="card card-glass shadow-lg mb-4">
-      <div class="card-header bg-transparent border-bottom">
-        <h3 class="text-gradient text-center mb-0">Comments & Ratings</h3>
-      </div>
-      <div class="card-body">
-        <form [formGroup]="commentForm" (ngSubmit)="onSubmitComment()" class="form-group">
-          <!-- Comment Input -->
-          <div class="mb-4">
-            <label class="form-label">Add Your Comment</label>
-            <textarea class="form-control form-control-floating"
-                      rows="3"
-                      placeholder="Share your thoughts about this movie..."
-                      formControlName="comment">
-            </textarea>
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="card card-glass border-0 shadow-lg h-100 position-sticky" style="top: 20px;">
+          <div class="card-header bg-transparent border-0 pt-4 px-4">
+            <h4 class="text-gradient fw-bold mb-0">Leave a Review</h4>
           </div>
+          <div class="card-body px-4 pb-4">
+            <form [formGroup]="commentForm" (ngSubmit)="onSubmitComment()">
 
-          <!-- Star Rating -->
-          <div class="mb-4">
-            <label class="form-label mb-3">Your Rating</label>
-            <div class="d-flex align-items-center gap-2 mb-2">
-              <div class="d-flex gap-1">
-                @for (star of [1, 2, 3, 4, 5]; track star) {
-                  <button type="button"
-                          class="btn btn-outline-primary p-1 hover-scale"
-                          (click)="setRating(star)">
-                    <span class="text-xl" [class.text-warning]="star <= ratingValue">⭐</span>
-                  </button>
+              <div class="mb-4 text-center p-3 bg-light rounded-3">
+                <label class="form-label text-muted small text-uppercase fw-bold mb-2">How was the movie?</label>
+                <div class="d-flex justify-content-center gap-2 mb-2">
+                  @for (star of [1, 2, 3, 4, 5]; track star) {
+                    <button type="button"
+                            class="btn btn-lg p-0 border-0 hover-scale transition-transform"
+                            (click)="setRating(star)">
+                      <span class="display-6" [class.text-warning]="star <= ratingValue" [class.text-muted]="star > ratingValue" style="cursor: pointer;">
+                        {{ star <= ratingValue ? '★' : '☆' }}
+                      </span>
+                    </button>
+                  }
+                </div>
+                @if (ratingValue) {
+                  <div class="badge bg-gradient text-white animate-fade-in">
+                    {{ ratingValue }} / 5 Stars
+                  </div>
                 }
               </div>
-              @if (ratingValue) {
-                <span class="badge badge-gradient ms-3">
-        {{ ratingValue }}/5
-                </span>
-              }
-            </div>
-            <small class="form-text text-muted d-flex align-items-center gap-1">
-              <span>Click stars to rate</span>
-              <span class="text-muted">•</span>
-              <span>1 = Poor, 5 = Excellent</span>
-            </small>
+
+              <div class="mb-4">
+                <label class="form-label fw-bold text-muted">Your Comment</label>
+                <textarea class="form-control form-control-lg bg-light border-0 focus-ring"
+                          rows="5"
+                          placeholder="What did you think about the plot, acting, etc?"
+                          formControlName="comment"></textarea>
+              </div>
+
+              <input type="hidden" formControlName="rating">
+
+              <button type="submit"
+                      class="btn btn-primary btn-gradient w-100 py-3 rounded-3 shadow-sm hover-lift fw-bold text-uppercase ls-1"
+                      [disabled]="commentForm.invalid">
+                <i class="me-2">💬</i> Post Review
+              </button>
+            </form>
           </div>
-
-
-          <!-- Hidden rating field for form validation -->
-          <input type="hidden" formControlName="rating">
-
-          <!-- Submit Button -->
-          <button type="submit"
-                  class="btn btn-gradient btn-shine w-100"
-                  [disabled]="commentForm.invalid">
-            <i class="icon me-2">💬</i> Post Comment
-          </button>
-        </form>
+        </div>
       </div>
-    <app-reviews-list [id]="id"></app-reviews-list>
-    Hiiiiiiiiiiiiiiiiiiiiiiiiiiii
+
+      <div class="col-lg-8">
+        <app-reviews-list [id]="id"></app-reviews-list>
+      </div>
     </div>
 
+    <div class="card bg-light border-0 rounded-3 mt-5 p-4">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-6 text-center text-md-start">
+          <span class="text-muted small">Manage this movie entry</span>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex gap-2 justify-content-md-end justify-content-center">
+            <a [routerLink]="['/movies/update', movie.id]"
+               class="btn btn-outline-success hover-lift px-4">
+              ✏️ Update
+            </a>
 
-
-    <!-- Action Buttons -->
-    <div class="row g-3 mb-4">
-      <div class="col-md-4">
-        <a [routerLink]="['/']" class="btn btn-outline-primary btn-lg w-100 hover-lift">
-          ← Back to List
-        </a>
-      </div>
-      <div class="col-md-4">
-        <a [routerLink]="['/movies/update', movie.id]"
-           class="btn btn-outline-success btn-lg w-100 hover-lift">
-          ✏️ Update Movie
-        </a>
-      </div>
-      <div class="col-md-4">
-        <button (click)="deleteSwal.fire()"
-                class="btn btn-outline-danger btn-lg w-100 hover-lift">
-          <swal
-            #deleteSwal
-            title="Delete {{ movie.title }}?"
-            text="This action cannot be undone"
-            icon="warning"
-            [showCancelButton]="true"
-            [focusCancel]="true"
-            [confirmButtonText]="'Delete'"
-            [cancelButtonText]="'Cancel'"
-            [confirmButtonColor]="'#ef4444'"
-            (confirm)="deleteMovie(movie.id)">
-          </swal>
-          🗑️ Delete Movie
-        </button>
+            <button (click)="deleteSwal.fire()"
+                    class="btn btn-outline-danger hover-lift px-4">
+              <swal
+                #deleteSwal
+                title="Delete {{ movie.title }}?"
+                text="This action cannot be undone"
+                icon="warning"
+                [showCancelButton]="true"
+                [focusCancel]="true"
+                [confirmButtonText]="'Yes, Delete'"
+                [cancelButtonText]="'Cancel'"
+                [confirmButtonColor]="'#ef4444'"
+                (confirm)="deleteMovie(movie.id)">
+              </swal>
+              🗑️ Delete
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
   } @else {
-    <!-- Not Found -->
-    <div class="card card-glass shadow-lg">
-      <div class="card-body text-center py-5">
-        <div class="mb-4">
-          <span class="text-4xl text-muted">🎬</span>
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+      <div class="card card-glass shadow-lg border-0 text-center p-5" style="max-width: 500px;">
+        <div class="mb-4 text-muted opacity-50">
+          <span class="display-1">🎬</span>
         </div>
-        <h3 class="text-gradient mb-3">Movie Not Found</h3>
-        <p class="text-muted mb-4">The requested movie could not be found.</p>
-        <a [routerLink]="['/']" class="btn btn-primary hover-lift">
-          Browse All Movies
+        <h2 class="text-gradient fw-bold mb-3">Movie Not Found</h2>
+        <p class="text-muted mb-4 lead">It seems this movie has been deleted or doesn't exist.</p>
+        <a [routerLink]="['/']" class="btn btn-primary btn-gradient btn-lg px-5 hover-lift rounded-pill">
+          Back to Home
         </a>
       </div>
     </div>

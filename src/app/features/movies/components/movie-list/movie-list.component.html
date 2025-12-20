@@ -1,47 +1,90 @@
-<div class="container">
-  <div class="header mt-3 d-flex justify-content-between align-items-center">
-    <h1>Movie List</h1>
-    <a [routerLink]="['/movies/add']" class="btn btn-primary">Add Movie</a>
-  </div>
-  <div class="mt-3 col-12">
-    <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchTerm" (ngModelChange)="loadPage($event)">
-  </div>
-  @if (movies && movies.length > 0) {
-    <div class="row mt-4">
-      @for (movie of movies; track $index) {
+<div class="container py-5">
 
-        <div class="col-md-4 mb-3">
-          <div class="card h-100">
-            <!-- FIXED: Image container with equal height -->
-            <div class="card-img-fixed">
-              <a [routerLink]="['/movies/details', movie.id]">
-              <img [src]="movie.posterUrl"
-                   class="card-img"
-                   alt="{{movie.title}}"
-                   onerror="this.src='https://placehold.co/600x400'">
-                </a>
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-5 gap-3">
+    <div>
+      <h1 class="text-gradient display-5 fw-bold mb-0">🎬 Movie Library</h1>
+      <p class="text-muted mb-0">Manage your collection of films</p>
+    </div>
+
+    <a [routerLink]="['/movies/add']"
+       class="btn btn-primary btn-gradient rounded-pill px-4 py-2 hover-lift shadow-sm fw-bold">
+      <span class="fs-5 align-middle me-1">+</span> Add New Movie
+    </a>
+  </div>
+
+  <div class="row justify-content-center mb-5">
+    <div class="col-lg-8">
+      <div class="position-relative">
+        <span class="position-absolute top-50 start-0 translate-middle-y ms-3 text-muted fs-5">
+          🔍
+        </span>
+        <input
+          type="text"
+          class="form-control form-control-lg border-0 shadow-sm rounded-pill ps-5 py-3 focus-ring"
+          placeholder="Search by title, genre, or description..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="loadPage($event)">
+      </div>
+    </div>
+  </div>
+
+  @if (movies && movies.length > 0) {
+    <div class="row g-4">
+      @for (movie of movies; track $index) {
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <div class="card card-glass h-100 border-0 shadow-sm overflow-hidden hover-lift transition-base">
+
+            <div class="position-relative overflow-hidden group-hover-zoom" style="height: 400px;">
+              <a [routerLink]="['/movies/details', movie.id]" class="d-block h-100 w-100 cursor-pointer">
+                <img [src]="movie.posterUrl"
+                     class="w-100 h-100 object-fit-cover transition-transform"
+                     alt="{{movie.title}}"
+                     onerror="this.src='https://placehold.co/600x900?text=No+Poster'">
+
+                <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-25 opacity-0 hover-opacity-100 d-flex align-items-center justify-content-center transition-opacity">
+                  <span class="btn btn-light rounded-pill px-4 shadow-lg fw-bold">View Details</span>
+                </div>
+              </a>
             </div>
-            <div class="card-body d-flex flex-column">
-              <div>
-                <h5 class="card-title">{{movie.title}}</h5>
-                <p class="card-text">{{movie.description}}</p>
-                <p class="card-text"><small class="text-muted">Release Date: {{movie.releaseDate | date}}</small></p>
-                <p class="card-text"><small class="text-muted">Genre: {{movie.genre}}</small></p>
+
+            <div class="card-body d-flex flex-column p-4">
+              <div class="mb-3">
+                <h5 class="card-title fw-bold text-dark mb-1 text-truncate" title="{{movie.title}}">
+                  {{movie.title}}
+                </h5>
+                <small class="text-muted d-block">
+                  📅 {{movie.releaseDate | date:'mediumDate'}}
+                </small>
               </div>
-              <a class="btn btn-outline-success" [routerLink]="['/movies/update/', movie.id]">Update</a>
-              <div class="col-12">
-                <button (click)="deleteSwal.fire()" class="btn btn-outline-danger w-100">
+
+              <div class="mb-3">
+                <span class="badge bg-primary bg-opacity-10 text-primary border border-primary rounded-pill">
+                  {{movie.genre}}
+                </span>
+              </div>
+
+              <p class="card-text text-muted small mb-4 flex-grow-1" style="display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">
+                {{movie.description}}
+              </p>
+
+              <div class="d-grid gap-2 d-flex">
+                <a [routerLink]="['/movies/update/', movie.id]"
+                   class="btn btn-outline-success btn-sm flex-grow-1 hover-lift">
+                  ✏️ Edit
+                </a>
+
+                <button class="btn btn-outline-danger btn-sm flex-grow-1 hover-lift" (click)="deleteSwal.fire()">
                   <swal
                     #deleteSwal
                     title="Delete {{ movie.title }}?"
                     text="This cannot be undone"
-                    icon="question"
+                    icon="warning"
                     [showCancelButton]="true"
                     [focusCancel]="true"
-                    (confirm)="deleteMovie(movie.id)"
-                  >
+                    [confirmButtonColor]="'#dc3545'"
+                    (confirm)="deleteMovie(movie.id)">
                   </swal>
-                  Delete
+                  🗑️ Delete
                 </button>
               </div>
             </div>
@@ -50,28 +93,49 @@
       }
     </div>
   } @else {
-    <div class="card mt-3">
-      <div class="card-body">
-        <h5 class="card-title text-center">No Movies Found</h5>
+    <div class="text-center py-5">
+      <div class="mb-3 opacity-50">
+        <span class="display-1">🎥</span>
       </div>
+      <h3 class="text-muted fw-bold">No Movies Found</h3>
+      <p class="text-muted">Try adjusting your search or add a new movie.</p>
     </div>
   }
+
   @if(pages.length > 1){
-    <nav class="d-flex justify-content-center">
+    <nav class="d-flex justify-content-center mt-5">
       <ul class="pagination pagination-lg">
         <li class="page-item" [class.disabled]="pageNumber === 1">
-          <a class="page-link" (click)="goTo(pageNumber-1)">‹</a>
+          <a class="page-link border-0 shadow-sm rounded-circle mx-1 d-flex align-items-center justify-content-center"
+             style="width: 45px; height: 45px; cursor: pointer;"
+             (click)="goTo(pageNumber-1)">
+            ‹
+          </a>
         </li>
 
-        <li class="page-item" *ngFor="let p of pages"
-            [class.active]="p === pageNumber">
-          <a class="page-link" (click)="goTo(p)">{{ p }}</a>
+        <li class="page-item" *ngFor="let p of pages" [class.active]="p === pageNumber">
+          <a class="page-link border-0 shadow-sm rounded-circle mx-1 d-flex align-items-center justify-content-center"
+             style="width: 45px; height: 45px; cursor: pointer;"
+             (click)="goTo(p)">
+            {{ p }}
+          </a>
         </li>
 
         <li class="page-item" [class.disabled]="pageNumber === pages.length">
-          <a class="page-link" (click)="goTo(pageNumber+1)">›</a>
+          <a class="page-link border-0 shadow-sm rounded-circle mx-1 d-flex align-items-center justify-content-center"
+             style="width: 45px; height: 45px; cursor: pointer;"
+             (click)="goTo(pageNumber+1)">
+            ›
+          </a>
         </li>
       </ul>
     </nav>
   }
 </div>
+<button
+  class="btn btn-primary btn-lg rounded-circle back-to-top shadow-lg"
+  [class.show]="showBackToTop"
+  (click)="scrollToTop()"
+  title="Back to Top">
+  ↑
+</button>

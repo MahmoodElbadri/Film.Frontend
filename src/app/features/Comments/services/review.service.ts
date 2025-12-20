@@ -2,8 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {CreateReview} from '../../movies/models/create-review';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment.development';
-import {CommentDto} from '../models/comment-dto';
-import {Observable} from 'rxjs';
+import {ReviewDto} from '../models/comment-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +17,7 @@ export class ReviewService {
   }
 
   getAll(movieId: number) {
-    return this.http.get<CommentDto[]>(`${this.baseUrl}Reviews`, {
+    return this.http.get<ReviewDto[]>(`${this.baseUrl}Reviews`, {
       params: { movieId: movieId.toString() }
     });
   }

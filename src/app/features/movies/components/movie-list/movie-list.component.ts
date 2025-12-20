@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, HostListener, inject, OnInit} from '@angular/core';
 import {MovieService} from '../../services/movie.service';
 import {MovieDto} from '../../models/movie-dto';
 import {DatePipe, NgForOf} from '@angular/common';
@@ -33,6 +33,8 @@ export class MovieListComponent implements OnInit {
   protected pages: number[] = [];
   protected searchTerm = '';
   protected searchTimeOut: any;
+
+
 
 
   ngOnInit(): void {
@@ -84,5 +86,21 @@ export class MovieListComponent implements OnInit {
         console.log(err);
       }
     })
+  }
+
+  //adding back to top button
+  // 1. Variable to track visibility
+  showBackToTop = false;
+
+  // 2. Listen to window scroll event
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    // Show button if scrolled down more than 300px
+    this.showBackToTop = window.scrollY > 300;
+  }
+
+  // 3. Method to scroll up smoothly
+  scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

@@ -31,7 +31,7 @@ export class MovieFormComponent implements OnInit {
       description: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(200),]],
       releaseDate: ['', [Validators.required]],
       genre: ['', [Validators.required]],
-      posterUrl: ['', [Validators.required, Validators.pattern('(https?://)?([\\da-z.-]+)\\.([a-z.]{2,6})[/\\w .-]*(?:\\.jpg|\\.jpeg|\\.png|\\.gif|\\.bmp|\\.webp|\\.img)(?:\\?.*)?$')]],
+      posterUrl: ['', [Validators.required]],
     });
   }
 

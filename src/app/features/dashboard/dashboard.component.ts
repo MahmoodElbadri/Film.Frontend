@@ -2,7 +2,7 @@ import {Component, inject, OnInit} from '@angular/core';
 import {MovieService} from '../movies/services/movie.service';
 import {MovieDto} from '../movies/models/movie-dto';
 import {ToastrService} from "ngx-toastr";
-import {DatePipe} from '@angular/common';
+import {DatePipe, PercentPipe} from '@angular/common';
 import {PieChartModule} from '@swimlane/ngx-charts';
 import {RouterLink} from '@angular/router';
 
@@ -12,7 +12,8 @@ import {RouterLink} from '@angular/router';
   imports: [
     PieChartModule,
     DatePipe,
-    RouterLink
+    RouterLink,
+    PercentPipe
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
@@ -30,6 +31,7 @@ export class DashboardComponent implements OnInit {
   dramaMoviesNumber: number = 0;
   saleData: any[] = [];
   view: [number, number] = [700, 400];
+  today: Date = new Date();
   // Options
   gradient: boolean = true;
   showLegend: boolean = true;

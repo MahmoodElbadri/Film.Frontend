@@ -7,7 +7,7 @@ import {SwalComponent} from '@sweetalert2/ngx-sweetalert2';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {ReviewsListComponent} from '../../../Comments/reviews-list/reviews-list.component';
-import {CommentService} from '../../../Comments/services/review.service';
+import {ReviewService} from '../../../Comments/services/review.service';
 
 @Component({
   selector: 'app-movie-details',
@@ -33,6 +33,7 @@ export class MovieDetailsComponent implements OnInit {
 
   // ViewChild references
   @ViewChild('deleteSwal') deleteSwal!: SwalComponent;
+  @ViewChild(ReviewsListComponent) reviewsList!: ReviewsListComponent;
 
   // Variables
   protected movie!: MovieDto;
@@ -40,7 +41,7 @@ export class MovieDetailsComponent implements OnInit {
   protected id: number = 0;
   // comments: Comment[] = [];
   protected ratingValue: number = 0; // For star rating display
-  private commentsService = inject(CommentService);
+  private reviewService = inject(ReviewService);
 
   constructor() {
     this.id = Number(this.route.snapshot.params['id']);
@@ -100,9 +101,10 @@ export class MovieDetailsComponent implements OnInit {
       commentData.movieId = this.id;
       console.log('Comment submitted:', commentData);
 
-      this.commentsService.addReview(commentData).subscribe({
+      this.reviewService.addReview(commentData).subscribe({
         next:()=>{
           this.toastr.success('Comment added successfully');
+          this.reviewsList.getComments();
         },
         error:(err)=>{
           this.toastr.error(`Can't add review because: ${err.error}`);

@@ -1,6 +1,7 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {AuthService} from '../../auth/_services/auth.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-navbar',
@@ -14,9 +15,13 @@ import {AuthService} from '../../auth/_services/auth.service';
 export class NavbarComponent {
 
 
+
   //injections
-  authService = inject(AuthService);
-  router = inject(Router);
+  protected authService = inject(AuthService);
+  private router = inject(Router);
+  toastr = inject(ToastrService);
+
+
 
   protected logOut() {
     this.authService.logOut();
