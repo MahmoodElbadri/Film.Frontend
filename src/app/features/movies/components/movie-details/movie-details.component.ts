@@ -5,6 +5,9 @@ import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {DatePipe} from '@angular/common';
 import {SwalComponent} from '@sweetalert2/ngx-sweetalert2';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
+import {ReviewsListComponent} from '../../../Comments/reviews-list/reviews-list.component';
+import {CommentService} from '../../../Comments/services/review.service';
 
 @Component({
   selector: 'app-movie-details',
@@ -13,7 +16,8 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
     RouterLink,
     DatePipe,
     SwalComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ReviewsListComponent
   ],
   templateUrl: './movie-details.component.html',
   styleUrl: './movie-details.component.css'
@@ -25,19 +29,22 @@ export class MovieDetailsComponent implements OnInit {
   router = inject(Router);
   route = inject(ActivatedRoute);
   fb = inject(FormBuilder);
+  toastr = inject(ToastrService);
 
   // ViewChild references
   @ViewChild('deleteSwal') deleteSwal!: SwalComponent;
 
   // Variables
-  movie!: MovieDto;
-  commentForm!: FormGroup;
-  id: number = 0;
-  comments: Comment[] = [];
-  ratingValue: number = 0; // For star rating display
+  protected movie!: MovieDto;
+  protected commentForm!: FormGroup;
+  protected id: number = 0;
+  // comments: Comment[] = [];
+  protected ratingValue: number = 0; // For star rating display
+  private commentsService = inject(CommentService);
 
   constructor() {
-    this.id = this.route.snapshot.params['id'];
+    this.id = Number(this.route.snapshot.params['id']);
+    this.toastr.info(`Movie ID: ${this.id} and the data type is ${typeof this.id}`);
   }
 
   ngOnInit(): void {
@@ -70,7 +77,7 @@ export class MovieDetailsComponent implements OnInit {
         this.movie = response;
       },
       error: (err) => {
-        console.log(err);
+        this.toastr.error(`Can't get movie because: ${err.error}`);
       }
     });
   }
@@ -81,7 +88,7 @@ export class MovieDetailsComponent implements OnInit {
         this.router.navigate(['/']);
       },
       error: (err) => {
-        console.log(err);
+        this.toastr.error(`Can't delete movie because: ${err.error}`);
       }
     });
   }
@@ -90,10 +97,17 @@ export class MovieDetailsComponent implements OnInit {
   onSubmitComment() {
     if (this.commentForm.valid) {
       const commentData = this.commentForm.value;
+      commentData.movieId = this.id;
       console.log('Comment submitted:', commentData);
 
-      // Here you would typically call a service to save the comment
-      // For example: this.movieService.addComment(this.id, commentData).subscribe(...)
+      this.commentsService.addReview(commentData).subscribe({
+        next:()=>{
+          this.toastr.success('Comment added successfully');
+        },
+        error:(err)=>{
+          this.toastr.error(`Can't add review because: ${err.error}`);
+        }
+      })
 
       // Reset form after submission
       this.commentForm.reset();

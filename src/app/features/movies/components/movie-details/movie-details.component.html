@@ -9,19 +9,17 @@
   @if (movie) {
     <!-- Movie Details Card -->
     <div class="card card-glass shadow-lg mb-4">
-      <div class="row g-0">
+      <div class="row g-0 align-items-stretch">
         <!-- Poster Column -->
-        <div class="col-md-6 p-4">
-          <div class="card-img-container aspect-ratio-16-9">
-            <img [src]="movie.posterUrl"
-                 class="card-img rounded-lg hover-scale"
-                 [alt]="movie.title"
-                 onerror="this.src='https://via.placeholder.com/800x450?text=No+Poster'">
-          </div>
+        <div class="col-md-6">
+          <img [src]="movie.posterUrl"
+               class="img-fluid w-100 h-100 object-fit-cover rounded-start"
+               [alt]="movie.title"
+               onerror="this.src='https://via.placeholder.com/800x450?text=No+Poster'">
         </div>
 
         <!-- Details Column -->
-        <div class="col-md-6 p-4">
+        <div class="col-md-6">
           <div class="card-body h-100 d-flex flex-column">
             <h1 class="text-gradient mb-3">{{ movie.title }}</h1>
 
@@ -81,7 +79,7 @@
             <label class="form-label mb-3">Your Rating</label>
             <div class="d-flex align-items-center gap-2 mb-2">
               <div class="d-flex gap-1">
-                @for (star of [1,2,3,4,5]; track star) {
+                @for (star of [1, 2, 3, 4, 5]; track star) {
                   <button type="button"
                           class="btn btn-outline-primary p-1 hover-scale"
                           (click)="setRating(star)">
@@ -91,7 +89,7 @@
               </div>
               @if (ratingValue) {
                 <span class="badge badge-gradient ms-3">
-                  {{ ratingValue }}/5
+        {{ ratingValue }}/5
                 </span>
               }
             </div>
@@ -102,6 +100,7 @@
             </small>
           </div>
 
+
           <!-- Hidden rating field for form validation -->
           <input type="hidden" formControlName="rating">
 
@@ -109,11 +108,15 @@
           <button type="submit"
                   class="btn btn-gradient btn-shine w-100"
                   [disabled]="commentForm.invalid">
-            <i class="icon me-2">💬</i> Submit Review
+            <i class="icon me-2">💬</i> Post Comment
           </button>
         </form>
       </div>
+    <app-reviews-list [id]="id"></app-reviews-list>
+    Hiiiiiiiiiiiiiiiiiiiiiiiiiiii
     </div>
+
+
 
     <!-- Action Buttons -->
     <div class="row g-3 mb-4">
@@ -141,8 +144,7 @@
             [confirmButtonText]="'Delete'"
             [cancelButtonText]="'Cancel'"
             [confirmButtonColor]="'#ef4444'"
-            (confirm)="deleteMovie(movie.id)"
-          >
+            (confirm)="deleteMovie(movie.id)">
           </swal>
           🗑️ Delete Movie
         </button>
